@@ -15,16 +15,17 @@
     const $$ = document.querySelector.bind(document);
     const $$all = document.querySelectorAll.bind(document);
     const pad = (d) => (d < 10) ? '0' + d.toString() : d.toString();
-    //@ts-ignore
+ 
     Date.prototype.dateHash = function dateHash() {
         const today = new Date();
         const hash = new Number(`${today.getFullYear()}${pad(today.getMonth() + 1)}${pad(today.getDate())}`);
         return hash.toString(36);
     };
-    //@ts-ignore
+  
     const localStorageKey = `filmweb-adblock-selector__${new Date().dateHash()}`;
     var targetSelector = localStorage.getItem(localStorageKey);
     const filmCheaterSectionClass = '.FilmCheaterSection';
+    
     const observer = new MutationObserver(function (mutations) {
         if (document.contains($$(targetSelector))) {
             $$(targetSelector)?.remove();
@@ -38,5 +39,6 @@
             observer.disconnect();
         }
     });
+
     await observer.observe(document, { attributes: false, childList: true, characterData: false, subtree: true });
 })();
