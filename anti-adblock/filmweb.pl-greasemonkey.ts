@@ -1,4 +1,3 @@
-"use strict";
 // ==UserScript==
 // @name         FilmWeb Anti-Adblock Script
 // @namespace    http://tampermonkey.net/
@@ -10,33 +9,44 @@
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
+
 (async function () {
     'use strict';
     const $$ = document.querySelector.bind(document);
     const $$all = document.querySelectorAll.bind(document);
-    const pad = (d) => (d < 10) ? '0' + d.toString() : d.toString();
+    const pad = (d:number) => (d < 10) ? '0' + d.toString() : d.toString();
+
     //@ts-ignore
-    Date.prototype.dateHash = function dateHash() {
-        const today = new Date();
-        const hash = new Number(`${today.getFullYear()}${pad(today.getMonth() + 1)}${pad(today.getDate())}`);
-        return hash.toString(36);
-    };
+    Date.prototype.dateHash = function dateHash() : string {
+            const today = new Date();
+            const hash = new Number(`${today.getFullYear()}${pad(today.getMonth()+1)}${pad(today.getDate())}`);
+            return hash.toString(36);
+    }
+    
     //@ts-ignore
     const localStorageKey = `filmweb-adblock-selector__${new Date().dateHash()}`;
-    var targetSelector = localStorage.getItem(localStorageKey);
-    const filmCheaterSectionClass = '.FilmCheaterSection';
+    var targetSelector: string | null = localStorage.getItem(localStorageKey);
+
+    const filmCheaterSectionClass : string = '.FilmCheaterSection';
+ 
     const observer = new MutationObserver(function (mutations) {
-        if (document.contains($$(targetSelector))) {
-            $$(targetSelector)?.remove();
+        
+        if (document.contains($$(targetSelector as string))) {
+            $$(targetSelector as string)?.remove();
             observer.disconnect();
         }
-        if (document.contains($$(filmCheaterSectionClass))) {
-            const targetElement = $$(filmCheaterSectionClass);
-            targetSelector = targetElement?.classList[0];
+
+        if (document.contains($$(filmCheaterSectionClass as string))) {
+            const targetElement = $$(filmCheaterSectionClass as string);
+            targetSelector = targetElement?.classList[0] as string;
             localStorage.setItem(localStorageKey, `#${targetSelector}`);
             window.location.reload();
             observer.disconnect();
         }
+        
     });
+
     await observer.observe(document, { attributes: false, childList: true, characterData: false, subtree: true });
+  
 })();
+
