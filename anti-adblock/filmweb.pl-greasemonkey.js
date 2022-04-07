@@ -1,10 +1,10 @@
 "use strict";
 // ==UserScript==
 // @name         FilmWeb Anti-Adblock Script
-// @namespace    http://tampermonkey.net/
-// @version      0.1
+// @namespace    http://filmweb.pl/
+// @version      0.1.1
 // @description  Lazy one but does the trick
-// @author       You
+// @author       Paweł Potępa - pawel.potepa@hotmail.com
 // @match        https://www.filmweb.pl/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=filmweb.pl
 // @grant        none
