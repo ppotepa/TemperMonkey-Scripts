@@ -15,6 +15,9 @@
     const $$ = document.querySelector.bind(document);
     const $$all = document.querySelectorAll.bind(document);
     const pad = (d:number) => (d < 10) ? '0' + d.toString() : d.toString();
+    const filmCheaterSectionClass : string = '.FilmCheaterSection';
+    //@ts-ignore
+     const localStorageKey = `filmweb-adblock-selector__${new Date().dateHash()}`;
 
     //@ts-ignore
     Date.prototype.dateHash = function dateHash() : string {
@@ -23,12 +26,8 @@
             return hash.toString(36);
     }
     
-    //@ts-ignore
-    const localStorageKey = `filmweb-adblock-selector__${new Date().dateHash()}`;
-    var targetSelector: string | null = localStorage.getItem(localStorageKey);
-
-    const filmCheaterSectionClass : string = '.FilmCheaterSection';
- 
+   
+    var targetSelector: string | null = localStorage.getItem(localStorageKey); 
     const observer = new MutationObserver(function (mutations) {
         
         if (document.contains($$(targetSelector as string))) {
